@@ -1,0 +1,6 @@
+/*.bat
+/*.exe
+/*.suo
+/obj
+/bin
+.vs/
