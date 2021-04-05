@@ -43,7 +43,8 @@
                     JToken token = JToken.Parse(jsonString);
 
                     // Add JSON native tree structure to TreeView.
-                    JsonTreeView.ItemsSource = new List<JToken>(token);
+                    var children = new List<JToken> { token };
+                    JsonTreeView.ItemsSource = new List<JToken>(children);
                 }
                 catch (Exception ex)
                 {
