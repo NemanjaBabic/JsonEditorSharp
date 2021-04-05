@@ -20,7 +20,16 @@
                 case JTokenType.Array:
                     return $"[{jToken.Children().Count()}]";
                 case JTokenType.Object:
-                    return $"{{{jToken.Children().Count()}}}]";
+                    if (jToken.Parent == null)
+                    {
+                        return $"object {{{jToken.Children().Count()}}}";
+                    }
+                    else
+                    {
+                        // Searches for the specified JToken and returns the index of its first occurrence.
+                        int indexOf = Array.IndexOf(jToken.Parent.Select(x => x.Path == jToken.Path).ToArray(), true);
+                        return $"{indexOf}  {{{jToken.Children().Count()}}}";
+                    }
                 case JTokenType.Property:
                     return ((JProperty)jToken).Value.Type switch
                     {
