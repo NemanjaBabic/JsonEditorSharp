@@ -3,10 +3,85 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:JsonEditorSharp"
+        xmlns:itemTemplateSelector="clr-namespace:JsonEditorSharp.ItemTemplateSelector"
+        xmlns:valueConverters="clr-namespace:JsonEditorSharp.ValueConverters"
+        xmlns:jsonLinq="clr-namespace:Newtonsoft.Json.Linq;assembly=Newtonsoft.Json"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="JSON Editor" Height="800" Width="800">
+    <Window.Resources>
 
-    </Grid>
+        <valueConverters:JsonUndefinedToJsonTokenConverter x:Key="JsonUndefinedToJsonTokenConverter"/>
+        <valueConverters:JsonDataToItemsCountConverter x:Key="JsonDataToItemsCountConverter"/>
+        <valueConverters:JsonArrayObjectToNestedDataConverter x:Key="JsonArrayObjectToNestedDataConverter"/>
+        <valueConverters:JValueConverter x:Key="JValueConverter"/>
+
+        <HierarchicalDataTemplate  x:Key="JsonArrayPropertyTemplate" DataType="{x:Type jsonLinq:JProperty}" ItemsSource="{Binding Converter={StaticResource JsonArrayObjectToNestedDataConverter}, ConverterParameter='Children'}">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="{Binding Path=Name, Mode=OneWay}" />
+                <TextBlock Text=" "/>
+                <TextBlock Text="{Binding Converter={StaticResource JsonDataToItemsCountConverter}}"/>
+            </StackPanel>
+        </HierarchicalDataTemplate>
+
+        <HierarchicalDataTemplate  x:Key="JsonObjectPropertyTemplate" DataType="{x:Type jsonLinq:JProperty}" ItemsSource="{Binding Converter={StaticResource JsonArrayObjectToNestedDataConverter}, ConverterParameter='Children'}">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="{Binding Path=Name, Mode=OneWay}" />
+                <TextBlock Text=" "/>
+                <TextBlock Text="{Binding Converter={StaticResource JsonDataToItemsCountConverter}}"/>
+            </StackPanel>
+        </HierarchicalDataTemplate>
+
+        <DataTemplate x:Key="JsonPrimitivePropertyTemplate" DataType="{x:Type jsonLinq:JProperty}" >
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="{Binding Path=Name, Mode=OneWay}" />
+                <TextBlock Text=" : "/>
+                <TextBlock TextWrapping="Wrap" Text="{Binding Path=Value, Converter={StaticResource JValueConverter}}" />
+            </StackPanel>
+        </DataTemplate>
+
+        <HierarchicalDataTemplate DataType="{x:Type jsonLinq:JArray}" ItemsSource="{Binding Converter={StaticResource JsonUndefinedToJsonTokenConverter}, ConverterParameter='Children'}">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="{Binding Converter={StaticResource JsonDataToItemsCountConverter}}"/>
+            </StackPanel>
+        </HierarchicalDataTemplate>
+
+        <HierarchicalDataTemplate DataType="{x:Type jsonLinq:JObject}" ItemsSource="{Binding Converter={StaticResource JsonUndefinedToJsonTokenConverter}, ConverterParameter='Children'}">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text=" "/>
+                <TextBlock Text="{}{ }"/>
+            </StackPanel>
+        </HierarchicalDataTemplate>
+
+        <HierarchicalDataTemplate DataType="{x:Type jsonLinq:JConstructor}" ItemsSource="{Binding Converter={StaticResource JsonUndefinedToJsonTokenConverter}, ConverterParameter='Children'}">
+            <TextBlock Text="Constructor"/>
+        </HierarchicalDataTemplate>
+
+        <HierarchicalDataTemplate DataType="{x:Type jsonLinq:JRaw}" ItemsSource="{Binding Converter={StaticResource JsonUndefinedToJsonTokenConverter}, ConverterParameter='Children'}">
+            <TextBlock Text="Raw"/>
+        </HierarchicalDataTemplate>
+
+        <DataTemplate DataType="{x:Type jsonLinq:JValue}">
+            <TextBlock TextWrapping="Wrap" Text="{Binding Converter={StaticResource JValueConverter}}"/>
+        </DataTemplate>
+
+        <itemTemplateSelector:JsonDataItemTemplateSelector x:Key="JsonDataItemTemplateSelector" 
+                                                           JsonArrayPropertyTemplate="{StaticResource JsonArrayPropertyTemplate}"
+                                                           JsonObjectPropertyTemplate="{StaticResource JsonObjectPropertyTemplate}"
+                                                           JsonPrimitivePropertyTemplate ="{StaticResource JsonPrimitivePropertyTemplate}"/>
+
+    </Window.Resources>
+
+    <ScrollViewer>
+        <StackPanel>
+            <TreeView x:Name="JsonTreeView" ItemTemplateSelector="{StaticResource JsonDataItemTemplateSelector}">
+                <TreeView.Resources>
+                    <Style TargetType="{x:Type TreeViewItem}">
+                        <Setter Property="IsExpanded" Value="False" />
+                    </Style>
+                </TreeView.Resources>
+            </TreeView>
+            <Button Content="Browse a file" HorizontalContentAlignment="Center" VerticalAlignment="Center" Width="100" Click="ButtonBrowseFile_OnClick"/>
+        </StackPanel>
+    </ScrollViewer>
+
 </Window>
