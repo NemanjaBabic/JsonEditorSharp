@@ -8,7 +8,7 @@
     using Newtonsoft.Json.Linq;
 
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    ///     Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
@@ -29,22 +29,25 @@
             // Display OpenFileDialog by calling ShowDialog method.
             bool? result = openFileDialog.ShowDialog();
 
-            // Get the selected file name.
             if (result == true)
             {
+                // Get the selected file name.
                 string fileName = openFileDialog.FileName;
-                string jsonString = File.ReadAllText(fileName); 
-                var children = new List<JToken>();
+
+                // Read JSON raw file and convert to string.
+                string jsonString = File.ReadAllText(fileName);
 
                 try
                 {
+                    // Parse JSON to JToken.
                     JToken token = JToken.Parse(jsonString);
-                    children.Add(token);
-                    JsonTreeView.ItemsSource = children;
+
+                    // Add JSON native tree structure to TreeView.
+                    JsonTreeView.ItemsSource = new List<JToken>(token);
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Could not open the JSON string:\r\n" + ex.Message);
+                    MessageBox.Show("Could not parse the JSON string:\r\n" + ex.Message);
                 }
             }
         }
