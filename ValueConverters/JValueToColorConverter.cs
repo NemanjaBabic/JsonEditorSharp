@@ -15,14 +15,14 @@
                 switch (jValue.Type)
                 {
                     case JTokenType.String:
-                        return new BrushConverter().ConvertFrom("#388e3c");
+                        return new BrushConverter().ConvertFrom("#4caf50");
                     case JTokenType.Float:
                     case JTokenType.Integer:
-                        return new BrushConverter().ConvertFrom("#d32f2f");
+                        return new BrushConverter().ConvertFrom("#f44336");
                     case JTokenType.Boolean:
-                        return new BrushConverter().ConvertFrom("#f57c00");
+                        return new BrushConverter().ConvertFrom("#ff9800");
                     case JTokenType.Null:
-                        return new BrushConverter().ConvertFrom("#1976d2");
+                        return new BrushConverter().ConvertFrom("#2196f3");
                 }
             }
 

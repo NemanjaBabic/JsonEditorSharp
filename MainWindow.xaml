@@ -22,7 +22,7 @@
                 <TextBlock Text="{Binding Path=Name, Mode=OneWay}" />
                 <TextBlock Text="  "/>
                 <TextBlock Text="{Binding Converter={StaticResource JsonDataToItemsCountConverter}}" 
-                           Foreground="#648dae"/>
+                           Foreground="#90caf9"/>
             </StackPanel>
         </HierarchicalDataTemplate>
 
@@ -31,7 +31,7 @@
                 <TextBlock Text="{Binding Path=Name, Mode=OneWay}" />
                 <TextBlock Text="  "/>
                 <TextBlock Text="{Binding Converter={StaticResource JsonDataToItemsCountConverter}}" 
-                           Foreground="#648dae"/>
+                           Foreground="#90caf9"/>
             </StackPanel>
         </HierarchicalDataTemplate>
 
@@ -47,13 +47,13 @@
 
         <HierarchicalDataTemplate DataType="{x:Type jsonLinq:JArray}" ItemsSource="{Binding Converter={StaticResource JsonUndefinedToJsonTokenConverter}, ConverterParameter='Children'}">
             <StackPanel Orientation="Horizontal">
-                <TextBlock Text="{Binding Converter={StaticResource JsonDataToItemsCountConverter}}" Foreground="#648dae"/>
+                <TextBlock Text="{Binding Converter={StaticResource JsonDataToItemsCountConverter}}" Foreground="#90caf9"/>
             </StackPanel>
         </HierarchicalDataTemplate>
 
         <HierarchicalDataTemplate DataType="{x:Type jsonLinq:JObject}" ItemsSource="{Binding Converter={StaticResource JsonUndefinedToJsonTokenConverter}, ConverterParameter='Children'}">
             <StackPanel Orientation="Horizontal">
-                <TextBlock Text="{Binding Converter={StaticResource JsonDataToItemsCountConverter}}" Foreground="#648dae"/>
+                <TextBlock Text="{Binding Converter={StaticResource JsonDataToItemsCountConverter}}" Foreground="#90caf9"/>
             </StackPanel>
         </HierarchicalDataTemplate>
 
@@ -66,9 +66,10 @@
         </HierarchicalDataTemplate>
 
         <DataTemplate DataType="{x:Type jsonLinq:JValue}">
-            <TextBlock TextWrapping="Wrap" 
-                       Text="{Binding Converter={StaticResource JValueConverter}}"
-                       Foreground="{Binding Converter={StaticResource JValueToColorConverter}}"/>
+            <TextBlock TextWrapping="Wrap">
+                <Run Text="{Binding Converter={StaticResource JValueConverter}, ConverterParameter=true, Mode=OneWay}" Foreground="#90caf9" />
+                <Run Text="{Binding Converter={StaticResource JValueConverter}, Mode=OneWay}" Foreground="{Binding Converter={StaticResource JValueToColorConverter}}" />
+            </TextBlock>
         </DataTemplate>
 
         <itemTemplateSelector:JsonDataItemTemplateSelector x:Key="JsonDataItemTemplateSelector" 

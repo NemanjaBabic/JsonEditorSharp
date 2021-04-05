@@ -1,4 +1,4 @@
-﻿namespace JsonEditorSharp.ValueConverters
+namespace JsonEditorSharp.ValueConverters
 {
     using System;
     using System.Globalization;
@@ -14,18 +14,21 @@
 
             if (value is JValue jvalue)
             {
-                if (jvalue.Parent != null && jvalue.Parent.GetType().Name == "JArray")
+                if (parameter != null && (string) parameter == "true")
                 {
-                    // Searches for the specified JToken and returns the index of its first occurrence.
-                    indexOf = Array.IndexOf(jvalue.Parent.Select(x => x.Path == jvalue.Path).ToArray(), true);
+                    if (jvalue.Parent != null && jvalue.Parent.GetType().Name == "JArray")
+                    {
+                        // Searches for the specified JToken and returns the index of its first occurrence.
+                        indexOf = Array.IndexOf(jvalue.Parent.Select(x => x.Path == jvalue.Path).ToArray(), true);
+                    }
                 }
 
                 if (jvalue.Type == JTokenType.Null)
                 {
-                    return indexOf == -1 ? "Null" : $"{indexOf} : Null";
+                    return indexOf == -1 ? "Null" : indexOf < 10 ? $"  {indexOf} : " : $"{indexOf} : ";
                 }
 
-                return indexOf == -1 ? jvalue.Value : $"{indexOf} : {jvalue.Value}";
+                return indexOf == -1 ? jvalue.Value : indexOf < 10 ? $"  {indexOf} : " : $"{indexOf} : ";
             }
 
             return value;
