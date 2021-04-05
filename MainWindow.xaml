@@ -47,13 +47,13 @@
 
         <HierarchicalDataTemplate DataType="{x:Type jsonLinq:JArray}" ItemsSource="{Binding Converter={StaticResource JsonUndefinedToJsonTokenConverter}, ConverterParameter='Children'}">
             <StackPanel Orientation="Horizontal">
-                <TextBlock Text="{Binding Converter={StaticResource JsonDataToItemsCountConverter}}"/>
+                <TextBlock Text="{Binding Converter={StaticResource JsonDataToItemsCountConverter}}" Foreground="#648dae"/>
             </StackPanel>
         </HierarchicalDataTemplate>
 
         <HierarchicalDataTemplate DataType="{x:Type jsonLinq:JObject}" ItemsSource="{Binding Converter={StaticResource JsonUndefinedToJsonTokenConverter}, ConverterParameter='Children'}">
             <StackPanel Orientation="Horizontal">
-                <TextBlock Text="{Binding Converter={StaticResource JsonDataToItemsCountConverter}}"/>
+                <TextBlock Text="{Binding Converter={StaticResource JsonDataToItemsCountConverter}}" Foreground="#648dae"/>
             </StackPanel>
         </HierarchicalDataTemplate>
 
