@@ -5,6 +5,7 @@
     using System.IO;
     using Microsoft.Win32;
     using System.Windows;
+    using System.Windows.Media;
     using Newtonsoft.Json.Linq;
 
     /// <summary>
@@ -15,6 +16,7 @@
         public MainWindow()
         {
             InitializeComponent();
+            JsonTreeView.Background = JsonTreeView.BorderBrush = StackPanelView.Background = (Brush) new BrushConverter().ConvertFrom("#121212");
         }
 
         private void ButtonBrowseFile_OnClick(object sender, RoutedEventArgs e)
