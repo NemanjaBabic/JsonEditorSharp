@@ -10,6 +10,9 @@
 
     public class JsonArrayObjectToNestedDataConverter : IValueConverter
     {
+        /// <summary>
+        ///     This converter is only used by JProperty tokens whose Value is Array/Object.
+        /// </summary>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value == null || parameter is not string methodName)
