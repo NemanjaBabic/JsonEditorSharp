@@ -1,27 +1,28 @@
 ﻿namespace JsonEditorSharp.ItemTemplateSelector
 {
-    using System;
     using System.Windows;
     using System.Windows.Controls;
     using Newtonsoft.Json.Linq;
 
     public class JsonDataItemTemplateSelector : DataTemplateSelector
     {
-        //// JToken Hierarchy:
+        ////  Provided that a JSON  is "officially" valid, it will only contain the following types when parsing the file: JArray, JObject, JProperty, JValue.
         ////
-        ////    JToken                           - abstract base class
-        ////      |
-        ////      | --->   JContainer            - abstract base class of JTokens that can contain other JTokens     
-        ////      |            |
-        ////      |            |---> JArray      - represents a JSON array(contains an ordered list of JTokens)
-        ////      |            |---> JObject     - represents a JSON object (contains a collection of JProperties)
-        ////      |            |---> JProperty   - represents a JSON property (a name/JToken pair inside a JObject)
-        ////      | --->   JValue                - represents a primitive JSON value (string, number, boolean, null)
+        ////        JToken Hierarchy:
+        ////
+        ////           JToken                           - abstract base class
+        ////             |
+        ////             | --->   JContainer            - abstract base class of JTokens that can contain other JTokens     
+        ////             |            |
+        ////             |            |---> JArray      - represents a JSON array(contains an ordered list of JTokens)
+        ////             |            |---> JObject     - represents a JSON object (contains a collection of JProperties)
+        ////             |            |---> JProperty   - represents a JSON property (a name/JToken pair inside a JObject)
+        ////             | --->   JValue                - represents a primitive JSON value (string, number, boolean, null)
 
         /// <summary>
-        ///     The JSON primitive property data type template.
+        ///     The JSON primitive property data template (string, number, boolean, null).
         /// </summary>
-        public DataTemplate JsonPrimitivePropertyTemplate { get; set; }
+        public DataTemplate JsonPrimitivePropertyDataTemplate { get; set; }
 
         /// <summary>
         ///     The JSON array data template.
@@ -46,21 +47,23 @@
                 return null;
             }
 
-            Type type = item.GetType();
-            if (type == typeof(JProperty))
+            // JProperty management.
+            if (item is JProperty jProperty)
             {
-                if (item is JProperty jProperty)
+                // Get the JProperty value type.
+                return jProperty.Value.Type switch
                 {
-                    return jProperty.Value.Type switch
-                    {
-                        JTokenType.Object => frameworkElement.FindResource("JsonObjectDataTemplate") as DataTemplate,
-                        JTokenType.Array => frameworkElement.FindResource("JsonArrayDataTemplate") as DataTemplate,
-                        _ => frameworkElement.FindResource("JsonPrimitivePropertyTemplate") as DataTemplate
-                    };
-                }
+                    // JObject.
+                    JTokenType.Object => frameworkElement.FindResource("JsonObjectDataTemplate") as DataTemplate,
+                    // JArray.
+                    JTokenType.Array => frameworkElement.FindResource("JsonArrayDataTemplate") as DataTemplate,
+                    // JProperty or JValue.
+                    _ => frameworkElement.FindResource("JsonPrimitivePropertyDataTemplate") as DataTemplate
+                };
             }
 
-            var key = new DataTemplateKey(type);
+            // JArray, JObject and JValue management.
+            var key = new DataTemplateKey(item.GetType());
             return frameworkElement.FindResource(key) as DataTemplate;
         }
     }

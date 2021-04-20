@@ -37,7 +37,7 @@
             </StackPanel>
         </HierarchicalDataTemplate>
 
-        <DataTemplate x:Key="JsonPrimitivePropertyTemplate" 
+        <DataTemplate x:Key="JsonPrimitivePropertyDataTemplate" 
                       DataType="{x:Type jsonLinq:JProperty}" >
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="{Binding Path=Name, Mode=OneWay}" />
@@ -68,19 +68,11 @@
             </StackPanel>
         </HierarchicalDataTemplate>
 
-        <HierarchicalDataTemplate DataType="{x:Type jsonLinq:JConstructor}" ItemsSource="{Binding Converter={StaticResource JsonUndefinedToJsonTokenConverter}, ConverterParameter='Children'}">
-            <TextBlock Text="Constructor"/>
-        </HierarchicalDataTemplate>
-
-        <HierarchicalDataTemplate DataType="{x:Type jsonLinq:JRaw}" ItemsSource="{Binding Converter={StaticResource JsonUndefinedToJsonTokenConverter}, ConverterParameter='Children'}">
-            <TextBlock Text="Raw"/>
-        </HierarchicalDataTemplate>
-
         <!-- ItemTemplateSelector of the TreeView -->
         <itemTemplateSelector:JsonDataItemTemplateSelector x:Key="JsonDataItemTemplateSelector" 
                                                            JsonArrayDataTemplate="{StaticResource JsonArrayDataTemplate}"
                                                            JsonObjectDataTemplate="{StaticResource JsonObjectDataTemplate}"
-                                                           JsonPrimitivePropertyTemplate ="{StaticResource JsonPrimitivePropertyTemplate}"/>
+                                                           JsonPrimitivePropertyDataTemplate ="{StaticResource JsonPrimitivePropertyDataTemplate}"/>
 
     </Window.Resources>
 
