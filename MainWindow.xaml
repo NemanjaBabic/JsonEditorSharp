@@ -17,25 +17,28 @@
         <valueConverters:JValueToColorConverter x:Key="JValueToColorConverter"/>
         <valueConverters:JPropertyToColorConverter x:Key="JPropertyToColorConverter"/>
 
-        <HierarchicalDataTemplate  x:Key="JsonArrayPropertyTemplate" DataType="{x:Type jsonLinq:JProperty}" ItemsSource="{Binding Converter={StaticResource JsonArrayObjectToNestedDataConverter}, ConverterParameter='Children'}">
+        <HierarchicalDataTemplate  x:Key="JsonArrayDataTemplate" 
+                                   DataType="{x:Type jsonLinq:JProperty}" 
+                                   ItemsSource="{Binding Converter={StaticResource JsonArrayObjectToNestedDataConverter}, ConverterParameter='Children'}">
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="{Binding Path=Name, Mode=OneWay}" />
                 <TextBlock Text="  "/>
-                <TextBlock Text="{Binding Converter={StaticResource JsonDataToItemsCountConverter}}" 
-                           Foreground="#90caf9"/>
+                <TextBlock Text="{Binding Converter={StaticResource JsonDataToItemsCountConverter}}" Foreground="#90caf9"/>
             </StackPanel>
         </HierarchicalDataTemplate>
 
-        <HierarchicalDataTemplate  x:Key="JsonObjectPropertyTemplate" DataType="{x:Type jsonLinq:JProperty}" ItemsSource="{Binding Converter={StaticResource JsonArrayObjectToNestedDataConverter}, ConverterParameter='Children'}">
+        <HierarchicalDataTemplate  x:Key="JsonObjectDataTemplate" 
+                                   DataType="{x:Type jsonLinq:JProperty}" 
+                                   ItemsSource="{Binding Converter={StaticResource JsonArrayObjectToNestedDataConverter}, ConverterParameter='Children'}">
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="{Binding Path=Name, Mode=OneWay}" />
                 <TextBlock Text="  "/>
-                <TextBlock Text="{Binding Converter={StaticResource JsonDataToItemsCountConverter}}" 
-                           Foreground="#90caf9"/>
+                <TextBlock Text="{Binding Converter={StaticResource JsonDataToItemsCountConverter}}" Foreground="#90caf9"/>
             </StackPanel>
         </HierarchicalDataTemplate>
 
-        <DataTemplate x:Key="JsonPrimitivePropertyTemplate" DataType="{x:Type jsonLinq:JProperty}" >
+        <DataTemplate x:Key="JsonPrimitivePropertyTemplate" 
+                      DataType="{x:Type jsonLinq:JProperty}" >
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="{Binding Path=Name, Mode=OneWay}" />
                 <TextBlock Text=" : "/>
@@ -43,6 +46,14 @@
                            Text="{Binding Path=Value, Converter={StaticResource JValueConverter}}" 
                            Foreground="{Binding Converter={StaticResource JPropertyToColorConverter}}" />
             </StackPanel>
+        </DataTemplate>
+
+        <!-- Data template of JValue (JSON value) -->
+        <DataTemplate DataType="{x:Type jsonLinq:JValue}">
+            <TextBlock TextWrapping="Wrap">
+                <Run Text="{Binding Converter={StaticResource JValueConverter}, ConverterParameter=true, Mode=OneWay}" Foreground="#90caf9" />
+                <Run Text="{Binding Converter={StaticResource JValueConverter}, Mode=OneWay}" Foreground="{Binding Converter={StaticResource JValueToColorConverter}}" />
+            </TextBlock>
         </DataTemplate>
 
         <HierarchicalDataTemplate DataType="{x:Type jsonLinq:JArray}" ItemsSource="{Binding Converter={StaticResource JsonUndefinedToJsonTokenConverter}, ConverterParameter='Children'}">
@@ -65,16 +76,10 @@
             <TextBlock Text="Raw"/>
         </HierarchicalDataTemplate>
 
-        <DataTemplate DataType="{x:Type jsonLinq:JValue}">
-            <TextBlock TextWrapping="Wrap">
-                <Run Text="{Binding Converter={StaticResource JValueConverter}, ConverterParameter=true, Mode=OneWay}" Foreground="#90caf9" />
-                <Run Text="{Binding Converter={StaticResource JValueConverter}, Mode=OneWay}" Foreground="{Binding Converter={StaticResource JValueToColorConverter}}" />
-            </TextBlock>
-        </DataTemplate>
-
+        <!-- ItemTemplateSelector of the TreeView -->
         <itemTemplateSelector:JsonDataItemTemplateSelector x:Key="JsonDataItemTemplateSelector" 
-                                                           JsonArrayPropertyTemplate="{StaticResource JsonArrayPropertyTemplate}"
-                                                           JsonObjectPropertyTemplate="{StaticResource JsonObjectPropertyTemplate}"
+                                                           JsonArrayDataTemplate="{StaticResource JsonArrayDataTemplate}"
+                                                           JsonObjectDataTemplate="{StaticResource JsonObjectDataTemplate}"
                                                            JsonPrimitivePropertyTemplate ="{StaticResource JsonPrimitivePropertyTemplate}"/>
 
     </Window.Resources>
