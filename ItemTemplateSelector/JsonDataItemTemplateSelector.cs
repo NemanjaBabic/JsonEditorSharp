@@ -20,9 +20,9 @@
         ////             | --->   JValue                - represents a primitive JSON value (string, number, boolean, null)
 
         /// <summary>
-        ///     The JSON primitive property data template (string, number, boolean, null).
+        ///     The JSON object data template.
         /// </summary>
-        public DataTemplate JsonPrimitivePropertyDataTemplate { get; set; }
+        public DataTemplate JsonObjectDataTemplate { get; set; }
 
         /// <summary>
         ///     The JSON array data template.
@@ -30,9 +30,9 @@
         public DataTemplate JsonArrayDataTemplate { get; set; }
 
         /// <summary>
-        ///     The JSON object data template.
+        ///     The JSON primitive property data template (string, number, boolean, null).
         /// </summary>
-        public DataTemplate JsonObjectDataTemplate { get; set; }
+        public DataTemplate JsonPrimitivePropertyDataTemplate { get; set; }
 
         /// <inheritdoc/>
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
@@ -57,7 +57,7 @@
                     JTokenType.Object => frameworkElement.FindResource("JsonObjectDataTemplate") as DataTemplate,
                     // JArray.
                     JTokenType.Array => frameworkElement.FindResource("JsonArrayDataTemplate") as DataTemplate,
-                    // JProperty or JValue.
+                    // One of the primitive JSON value (string, number, boolean, null).
                     _ => frameworkElement.FindResource("JsonPrimitivePropertyDataTemplate") as DataTemplate
                 };
             }

@@ -12,6 +12,16 @@ namespace JsonEditorSharp.ValueConverters
         {
             int indexOf = -1;
 
+            //// Example:
+            ////
+            ////     0 : aaa
+            ////     1 : bbb
+            ////     2 : ccc
+            ////    ...
+            ////    10 : jjj
+            ////    11 : kkk
+            ////    12 : Null
+
             if (value is JValue jvalue)
             {
                 if (parameter != null && (string) parameter == "true")
