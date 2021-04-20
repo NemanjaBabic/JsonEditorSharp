@@ -1,11 +1,15 @@
 ﻿namespace JsonEditorSharp
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
     using System.IO;
+    using System.Linq;
+    using System.Text.Json.Serialization;
     using Microsoft.Win32;
     using System.Windows;
     using System.Windows.Media;
+    using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
 
     /// <summary>
@@ -34,10 +38,10 @@
             if (result == true)
             {
                 // Get the selected file name.
-                string fileName = openFileDialog.FileName;
+                JsonFileName.Content = openFileDialog.FileName;
 
                 // Read JSON raw file and convert to string.
-                string jsonString = File.ReadAllText(fileName);
+                string jsonString = File.ReadAllText(JsonFileName.Content.ToString() ?? string.Empty);
 
                 try
                 {
@@ -52,6 +56,23 @@
                 {
                     MessageBox.Show("Could not parse the JSON string:\r\n" + ex.Message);
                 }
+            }
+        }
+
+        private void ButtonExportJson_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (JsonTreeView.ItemsSource == null)
+            {
+                // Empty file.
+                return;
+            }
+
+            foreach (object root in JsonTreeView.ItemsSource)
+            {
+                dynamic json = JsonConvert.DeserializeObject(root.ToString() ?? string.Empty);
+                string formattedJsonString = JsonConvert.SerializeObject(json, Formatting.Indented);
+                File.WriteAllText(JsonFileName.Content.ToString() ?? string.Empty, formattedJsonString);
+                return;
             }
         }
     }
