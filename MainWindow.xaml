@@ -103,6 +103,15 @@
                     HorizontalContentAlignment="Center"
                     VerticalAlignment="Center"
                     Click="ButtonExportJson_OnClick"/>
+            <Button Content="Remove Node"
+                    Margin="20"
+                    Padding="10"
+                    Background="Transparent"
+                    BorderThickness="2"
+                    BorderBrush="WhiteSmoke"
+                    HorizontalContentAlignment="Center"
+                    VerticalAlignment="Center"
+                    Click="ButtonRemoveNode_OnClick"/>
             <TreeView x:Name="JsonTreeView" 
                       ItemTemplateSelector="{StaticResource JsonDataItemTemplateSelector}" 
                       Margin="20,0,20,0" 

@@ -1,11 +1,8 @@
-﻿namespace JsonEditorSharp
+namespace JsonEditorSharp
 {
     using System;
-    using System.Collections;
     using System.Collections.Generic;
     using System.IO;
-    using System.Linq;
-    using System.Text.Json.Serialization;
     using Microsoft.Win32;
     using System.Windows;
     using System.Windows.Media;
@@ -74,6 +71,19 @@
                 File.WriteAllText(JsonFileName.Content.ToString() ?? string.Empty, formattedJsonString);
                 return;
             }
+        }
+
+        private void ButtonRemoveNode_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (((JToken) JsonTreeView.SelectedItem)?.Parent == null)
+            {
+                return;
+            }
+
+            ((JToken) JsonTreeView.SelectedItem).Remove();
+
+            JsonTreeView.Items.Refresh();
+            JsonTreeView.UpdateLayout();
         }
     }
 }
