@@ -5,6 +5,7 @@ namespace JsonEditorSharp
     using System.IO;
     using Microsoft.Win32;
     using System.Windows;
+    using System.Windows.Input;
     using System.Windows.Media;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
@@ -84,6 +85,22 @@ namespace JsonEditorSharp
 
             JsonTreeView.Items.Refresh();
             JsonTreeView.UpdateLayout();
+        }
+
+        private void KeyDownRemoveNode_OnKeyDelete(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Delete)
+            {
+                if (((JToken)JsonTreeView.SelectedItem)?.Parent == null)
+                {
+                    return;
+                }
+
+                ((JToken)JsonTreeView.SelectedItem).Remove();
+
+                JsonTreeView.Items.Refresh();
+                JsonTreeView.UpdateLayout();
+            }
         }
     }
 }

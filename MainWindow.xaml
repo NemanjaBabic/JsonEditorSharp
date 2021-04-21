@@ -115,7 +115,8 @@
             <TreeView x:Name="JsonTreeView" 
                       ItemTemplateSelector="{StaticResource JsonDataItemTemplateSelector}" 
                       Margin="20,0,20,0" 
-                      Padding="0,0,0,20">
+                      Padding="0,0,0,20" 
+                      KeyDown="KeyDownRemoveNode_OnKeyDelete">
                 <TreeView.Resources>
                     <Style TargetType="{x:Type TreeViewItem}">
                         <Setter Property="IsExpanded" Value="False" />
