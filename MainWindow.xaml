@@ -81,49 +81,71 @@
 
     </Window.Resources>
 
-    <ScrollViewer>
-        <StackPanel x:Name="StackPanelView">
-            <Label x:Name="JsonFileName" 
-                   Margin="20,20,20,0"/>
-            <Button Content="Browse a file"
-                    Margin="20"
-                    Padding="10"
-                    Background="Transparent"
-                    BorderThickness="2"
-                    BorderBrush="WhiteSmoke"
-                    HorizontalContentAlignment="Center"
-                    VerticalAlignment="Center"
-                    Click="ButtonBrowseFile_OnClick"/>
-            <Button Content="Export to JSON"
-                    Margin="20"
-                    Padding="10"
-                    Background="Transparent"
-                    BorderThickness="2"
-                    BorderBrush="WhiteSmoke"
-                    HorizontalContentAlignment="Center"
-                    VerticalAlignment="Center"
-                    Click="ButtonExportJson_OnClick"/>
-            <Button Content="Remove Node"
-                    Margin="20"
-                    Padding="10"
-                    Background="Transparent"
-                    BorderThickness="2"
-                    BorderBrush="WhiteSmoke"
-                    HorizontalContentAlignment="Center"
-                    VerticalAlignment="Center"
-                    Click="ButtonRemoveNode_OnClick"/>
-            <TreeView x:Name="JsonTreeView" 
-                      ItemTemplateSelector="{StaticResource JsonDataItemTemplateSelector}" 
-                      Margin="20,0,20,0" 
-                      Padding="0,0,0,20" 
-                      KeyDown="KeyDownRemoveNode_OnKeyDelete">
-                <TreeView.Resources>
-                    <Style TargetType="{x:Type TreeViewItem}">
-                        <Setter Property="IsExpanded" Value="False" />
-                    </Style>
-                </TreeView.Resources>
-            </TreeView>
-        </StackPanel>
-    </ScrollViewer>
+    <Grid x:Name="StackPanelView">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Label Grid.Row="0" x:Name="JsonFileName" Margin="20,20,20,0"/>
+        <Button Grid.Row="1" 
+                Content="Browse a file"
+                Margin="20"
+                Padding="10"
+                Background="Transparent"
+                BorderThickness="2"
+                BorderBrush="WhiteSmoke"
+                HorizontalContentAlignment="Center"
+                VerticalAlignment="Center"
+                Click="ButtonBrowseFile_OnClick"/>
+        <Button Grid.Row="2" 
+                Content="Export to JSON"
+                Margin="20"
+                Padding="10"
+                Background="Transparent"
+                BorderThickness="2"
+                BorderBrush="WhiteSmoke"
+                HorizontalContentAlignment="Center"
+                VerticalAlignment="Center"
+                Click="ButtonExportJson_OnClick"/>
+        <Button Grid.Row="3" 
+                Content="Add Node"
+                Margin="20"
+                Padding="10"
+                Background="Transparent"
+                BorderThickness="2"
+                BorderBrush="WhiteSmoke"
+                HorizontalContentAlignment="Center"
+                VerticalAlignment="Center"
+                Click="ButtonAddNode_OnClick"/>
+        <Button Grid.Row="4" 
+                Content="Remove Node"
+                Margin="20"
+                Padding="10"
+                Background="Transparent"
+                BorderThickness="2"
+                BorderBrush="WhiteSmoke"
+                HorizontalContentAlignment="Center"
+                VerticalAlignment="Center"
+                Click="ButtonRemoveNode_OnClick"/>
+        <ScrollViewer Grid.Row="5" >
+            <StackPanel>
+                <TreeView x:Name="JsonTreeView" 
+                          ItemTemplateSelector="{StaticResource JsonDataItemTemplateSelector}" 
+                          Margin="20,0,20,0" 
+                          Padding="0,0,0,20" 
+                          KeyDown="KeyDownRemoveNode_OnKeyDelete">
+                    <TreeView.Resources>
+                        <Style TargetType="{x:Type TreeViewItem}">
+                            <Setter Property="IsExpanded" Value="False" />
+                        </Style>
+                    </TreeView.Resources>
+                </TreeView>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
 
 </Window>

@@ -74,6 +74,25 @@ namespace JsonEditorSharp
             }
         }
 
+        private void ButtonAddNode_OnClick(object sender, RoutedEventArgs e)
+        {
+            ////if (JsonTreeView.SelectedItem == null || ((JToken)JsonTreeView.SelectedItem) == null)
+            ////{
+            ////    return;
+            ////}
+
+            ////var newValue = @"'Test'";
+            ////JToken jj = JToken.Parse(newValue);
+
+            ////var test = ((JToken)JsonTreeView.SelectedItem);
+            ////var t = (JArray) test;
+
+            ////t.Add(jj);
+
+            ////JsonTreeView.Items.Refresh();
+            ////JsonTreeView.UpdateLayout();
+        }
+
         private void ButtonRemoveNode_OnClick(object sender, RoutedEventArgs e)
         {
             if (((JToken) JsonTreeView.SelectedItem)?.Parent == null)
